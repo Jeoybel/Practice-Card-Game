@@ -1,4 +1,9 @@
-#include "Includes.h"
+#pragma once
+#include <iostream>
+#include "Utility.h"
+#include "CardGame.h"
+
+using namespace std;
 
 int main() {
 	string input{ "" };
