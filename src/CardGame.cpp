@@ -72,16 +72,11 @@ void CardGame::makeAllSwaps() {
 * Swap two random cards in play
 */
 void CardGame::swapRandomCards() {
-	vector<string> tempCardsInPlay{ cardsInPlay };				// store cards in play in temporary vector
-	int cardPos = rand() % tempCardsInPlay.size();				// get random index from temporary vector
-	string card1{ tempCardsInPlay[cardPos] };					// save card value as card1 at random index
-	tempCardsInPlay.erase(tempCardsInPlay.begin() + cardPos);	// remove it from temporary vector to remove possiblity of selecting same card again
-	cardPos = rand() % tempCardsInPlay.size();					// get random index from temporary vector now with 1 less card
-	string card2{ tempCardsInPlay[cardPos] };					// save card value as card2 at random index
-	int card1Pos = findIndex(cardsInPlay, card1);				// find card1 equivalent card from cards in play and record new index in card1Pos.
-	int card2Pos = findIndex(cardsInPlay, card2);				// find card2 equivalent card from cards in play and record new index in card2Pos
-	swap(cardsInPlay[card1Pos], cardsInPlay[card2Pos]);			// swap those cards in cards in play
-	displaySwaps(card1Pos, card2Pos);							// display which cards were swapped
+	int card1Pos = rand() % cardsInPlay.size();				// get random index from temporary vector
+	int card2Pos = rand() % (cardsInPlay.size() - 1);		// get random index from temporary vector as if 1 card was taken from it
+	if (card2Pos >= card1Pos) { card2Pos += 1; }			// correct card 2 position and ensure that card doesn't swap with itself
+	swap(cardsInPlay[card1Pos], cardsInPlay[card2Pos]);		// swap those cards in cards in play
+	displaySwaps(card1Pos, card2Pos);						// display which cards were swapped
 }
 
 /*
