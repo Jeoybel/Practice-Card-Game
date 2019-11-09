@@ -4,14 +4,14 @@
 #include <chrono>
 #include <thread>
 
-inline std::string stringToLower(std::string rawString) {
+std::string stringToLower(std::string rawString) {
 	for (auto it = rawString.begin(); it != rawString.end(); ++it) {
 		*it = tolower(*it);
 	}
 	return rawString;
 }
 
-inline int findIndex(const std::vector<std::string>& vec, std::string findString) {
+int findIndex(const std::vector<std::string>& vec, std::string findString) {
 	int index{ -1 };
 	int tempIndex{ 0 };
 	if (!vec.empty()) {
@@ -26,7 +26,7 @@ inline int findIndex(const std::vector<std::string>& vec, std::string findString
 	return index;
 }
 
-inline void countdown(int start) {
+void countdown(int start) {
 	for (size_t i = start; i > 0; i--) {
 		std::cout << "(" << i << " s) ";
 		std::this_thread::sleep_for(std::chrono::seconds(1));
