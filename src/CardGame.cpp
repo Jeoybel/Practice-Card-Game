@@ -11,27 +11,35 @@ CardGame::CardGame(string difficulty)
 
 CardGame::~CardGame() {}
 
+/*
+* Run 3 rounds
+*/
 void CardGame::runGame() {
 	clearConsole();
 	cout << "Starting game! (" << pSettings->getDifficulty() << ")" << endl;
-	wait(1.5);
-	initAllCards();
-	setupRound();
-	printAllCards("shown");
-	cout << "\nMemorize the cards!" << endl;
-	wait(1.8);
-	countdown(5);
-	cout << "GO" << endl;
-	wait(0.8);
-	printAllCards("hidden");
-	wait(1);
-	makeAllSwaps();
-	cout << endl;
-	decideCards();
-	wait(1.5);
-	printAllCards("shown");
-	cout << endl;
-	displayScore();
+	for (size_t i = 0; i < 3; i++) {
+		resetCards();
+		cout << "Starting round #" << i + 1 << "!" << endl;
+		wait(2);
+		countdown(3);
+		setupRound();
+		printAllCards("shown");
+		cout << "\nMemorize the cards!" << endl;
+		wait(2);
+		countdown(5);
+		cout << "GO" << endl;
+		wait(1);
+		printAllCards("hidden");
+		wait(1);
+		makeAllSwaps();
+		cout << endl;
+		decideCards();
+		wait(1);
+		printAllCards("shown");
+		cout << endl;
+		displayScore();
+	}
+	cout << "Game Over!" << endl;
 }
 
 /*
@@ -63,9 +71,7 @@ void CardGame::makeAllSwaps() {
 		cout << endl;
 		countdown(pSettings->getPauseLength());
 		printAllCards("hidden");
-		if (i != pSettings->getNumSwaps() - 1) {
-			wait(1);
-		}
+		if (i != pSettings->getNumSwaps() - 1) { wait(1); }
 	}
 }
 
@@ -90,9 +96,10 @@ void CardGame::decideCards() {
 		cin.clear();
 		cin.ignore(32767, '\n');
 		if (stringToLower(input) == stringToLower(cardsInPlay[i])) {
-			cout << "Correct! +" << scoreboard.scorePoints(true) << " points! " << endl;
-		} else {
-			cout << "Incorrect!" << endl;
+			cout << "Correct! +" << scoreboard.scorePoints(true) << " points!\n" << endl;;
+		}
+		else {
+			cout << "Incorrect!\n" << endl;;
 		}
 	}
 }
@@ -129,12 +136,15 @@ void CardGame::printAllCards(const string& cardState) const {
 	for (size_t i = 0; i < cardsInPlay.size(); i++) {
 		if (cardState == "shown") {
 			printCard(i, "shown");
-		} else if (cardState == "hidden") {
+		}
+		else if (cardState == "hidden") {
 			printCard(i, "hidden");
-		} else if (cardState == "swapped") {
+		}
+		else if (cardState == "swapped") {
 			if (i == swapPos1 || i == swapPos2) {
 				printCard(i, "swapped");
-			} else {
+			}
+			else {
 				printCard(i, "hidden");
 			}
 		}
@@ -147,8 +157,8 @@ void CardGame::printAllCards(const string& cardState) const {
 */
 void CardGame::printCard(const int& cardPos, const string& cardState) const {
 	cout << "|  ";
-	if (cardState == "shown") cout << cardsInPlay[cardPos];
-	else if (cardState == "swapped") cout << "[*]";
-	else if (cardState == "hidden") cout << "[ ]";
+	if (cardState == "shown") { cout << cardsInPlay[cardPos]; }
+	else if (cardState == "swapped") { cout << "[*]"; }
+	else if (cardState == "hidden") { cout << "[ ]"; }
 	cout << "\t|";
 }
